@@ -1,0 +1,78 @@
+.Login {
+  background: linear-gradient(120deg, #2eba7c, #2ebab7);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card {
+  border-radius: 12px;
+  border-width: 1px;
+  border-color: black;
+  background-color: white;
+  padding: 15px;
+  border-style: solid;
+  width: 40vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.card-inside {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 350px;
+}
+.login-button {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 14px;
+  color: #ffffff;
+  height: 40px;
+  width: 30%;
+  margin-top: 8px;
+  background-color: #2eba7c;
+  border-radius: 8px;
+  border: none;
+}
+.input-label {
+  margin-bottom: 0px;
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 16px;
+  color: #475569;
+}
+.username-input-filed {
+  font-size: 14px;
+  height: 40px;
+  border: 1px solid #d7dfe9;
+  background-color: #e2e8f0;
+  color: #64748b;
+  border-radius: 2px;
+  margin-top: 5px;
+  padding: 8px 16px 8px 16px;
+}
+.signup-button {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 14px;
+  color: #ffffff;
+  height: 40px;
+  width: 30%;
+  margin-bottom: 2px;
+  background-color: #2eba7c;
+  border-radius: 8px;
+  border: none;
+}
+.register-text {
+  font-size: 13px;
+  font-family: "Roboto";
+  font-weight: bold;
+  color: #475569;
+  margin-bottom: 3px;
+}

@@ -1,16 +1,18 @@
 # coding=utf-8
 from datetime import timedelta, datetime, timezone
 from flask.cli import FlaskGroup
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask_migrate import Migrate
 from flask import Flask, jsonify, request,redirect,render_template, session, url_for
 from sqlalchemy import null, select
 from .models import Session, engine, Base
 from .models import User, Group, Group_Member
-from urllib.request import Request, urlopen
+from urllib.request import  urlopen
 import json
+import requests
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity, \
                                unset_jwt_cookies, jwt_required, JWTManager
+
 
 
 #Imports for connecting backend to auth0
@@ -20,9 +22,9 @@ import json
 from os import environ as env
 from werkzeug.exceptions import HTTPException
 from dotenv import load_dotenv, find_dotenv
-from authlib.integrations.flask_client import OAuth
+# from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
-from .auth import API_AUDIENCE, AuthError, requires_auth
+# from .auth import API_AUDIENCE, AuthError, requires_auth
 
 
 
@@ -39,6 +41,17 @@ cli = FlaskGroup(server)
 
 session = Session()
 
+@server.before_request
+def before_request_func():
+    return {'Allow' : 'POST' }, 200, { 'Access-Control-Allow-Origin': 'http://localhost:3000', 'Access-Control-Allow-Methods' : 'PUT,GET,POST' , 'Access-Control-Allow-Credentials': 'true','Access-Control-Allow-Headers': 'access-control-allow-origin,content-type'}
+
+############################
+# Routes for messaging
+############################
+@server.route('/api/addgroup', methods=['POST'])
+def add_group():
+
+    return 'h'
 
 
 #API
@@ -59,23 +72,32 @@ def refresh_expiring_jwts(response):
         # Case where there is not a valid JWT. Just return the original respone
         return response
 
-@server.route('/token', methods=["POST"])
+@server.route('/api/token', methods=["POST"])
+@cross_origin(supports_credentials=True)
 def create_token():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    if email != "test" or password != "test":
-        return {"msg": "Wrong email or password"}, 401
 
     access_token = create_access_token(identity=email)
+    json_data = request.json
+    user = User.query.filter_by(email=json_data['email']).first()
+    if user(
+            user.password, json_data['password']):
+        session['logged_in'] = True
+        status = True
+    else:
+        status = False
     response = {"access_token":access_token}
-    return response
+    return jsonify({'result': status})
 
-@server.route('/')
+@server.route('/api', methods=["POST"])
 def home():
-    return render_template('Dashboard.html')
+    data = {"data": "Hello World"}
+    return jsonify(data)
+    
      
 
-@server.route('/get-started', methods=['POST'])
+@server.route('/api/get-started', methods=['POST'])
 # @requires_auth
 def get_started():
     json_data = request.json
@@ -99,7 +121,7 @@ def get_started():
 
     return jsonify({'result': status})
 
-@server.route('/join')
+@server.route('/api/join')
 #@requires_auth
 def joinGroup():
     json_data = request.json
@@ -123,16 +145,16 @@ def joinGroup():
 
 
 
-@server.route('/send-access-key')
+@server.route('/api/send-access-key')
 def accesskey():
     return render_template('join.html')
 
-@server.route('/send-invite')
+@server.route('/api/send-invite')
 def sendinvite():
     return render_template('Intro.html')
 
 
-@server.route('/register', methods=['POST'])
+@server.route('/api/register', methods=['POST'])
 def register():
     json_data = request.json
       # mount User object
@@ -147,7 +169,18 @@ def register():
         intro=json_data['intro'],
         profile=json_data['profile']       
     )
+    chatuser = [
+        {'first_name': User.firstname},
+        {'last_name': User.lastname},
+        {'username' : User.username},
+        {'email' : User.email},
+        {'secret' : User.password},
+    ]
     try:
+        r = requests.post('https://api.chatengine.io/users/',
+            data=chatuser,
+            headers={'Private-Key' : 'ca-0c4de29c-0ea1-4b4d-99f8-a6cc3f53fe39'}
+        )
         # persist user
         session.add(user)
         session.commit()
@@ -157,12 +190,12 @@ def register():
      # return created user
 
     session.close()
-    return redirect('/callback')
+    return jsonify({'result': status})
 
    
 
 # Routes for login, callback 
-@server.route('/login')
+@server.route('/api/login')
 def login():
     json_data = request.json
     user = User.query.filter_by(email=json_data['email']).first()
@@ -174,7 +207,7 @@ def login():
         status = False
     return auth0.authorize_redirect(redirect_uri='http://localhost:4200', audience = API_AUDIENCE)
 
-@server.route('/logout')
+@server.route('/api/logout')
 def logout():
     # Clear session stored data
     session.clear()
@@ -186,7 +219,7 @@ def logout():
    # params = {'returnTo': url_for('home', _external=True), 'client_id': 'ECUr7U2H6cH2fdYno1UWDIOaRYwDwsA1'}
    # return redirect('https://https://dev-dm6nugc4.us.auth0.com' + '/v2/logout?' + urlencode(params))
 
-@server.route('/callback')
+@server.route('/api/callback')
 def callback_handling():
     # Handles response from token endpoint
     auth0.authorize_access_token()
@@ -202,8 +235,3 @@ def callback_handling():
     }
     return redirect('/dashboard')
 
-@server.errorhandler(AuthError)
-def handle_auth_error(ex):
-    response = jsonify(ex.error)
-    response.status_code = ex.status_code
-    return response

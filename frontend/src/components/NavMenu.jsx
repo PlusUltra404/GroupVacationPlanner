@@ -3,7 +3,7 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link } from 'react-router-dom';
 //import './NavMenu.css';
 
-export default function NavMenu() {
+export default function NavMenu(props) {
 
 
   //export class NavMenu extends Component {
@@ -36,7 +36,7 @@ export default function NavMenu() {
                 <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink tag={Link} className="text-dark" to="/counter">Plan</NavLink>
+                <NavLink tag={Link} className="text-dark" to="/register">Plan</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink tag={Link} className="text-dark" to="/fetch-data"> Login</NavLink>
