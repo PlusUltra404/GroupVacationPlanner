@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Header from "./Header";
-import "./Home.css";
+import "../styles/Home.css";
 
 export class Home extends Component {
   static displayName = Home.name;

@@ -10,7 +10,7 @@ import {
 import APIService from "./APIService";
 
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
+import "../styles/Login.css";
 
 export default function Login(props) {
   const [username, setUserName] = useState("");

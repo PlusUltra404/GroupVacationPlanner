@@ -10,7 +10,7 @@ import NavMenu from "./NavMenu";
 import Login from "./Login";
 import APIService from './APIService'
 import useToken from './useToken'
-import Profile from './Profile'
+
 import Message from './Message'
 import Modal from "./messagepage";
 

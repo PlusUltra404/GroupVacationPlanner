@@ -10,7 +10,7 @@ import {
 import { Text } from "react-native";
 
 import zxcvbn from "zxcvbn";
-import "./Register.css";
+import "../styles/Register.css";
 
 export default function Register(props) {
   const [username, setUserName] = useState("");
