@@ -2,20 +2,20 @@ version: '3.9'
 
 services:
   #Backend build
-  api:
-    build: ./Backend
+#  api:
+#    build: ./Backend
 
-    command: python3 manage.py run -h 0.0.0.0
-    container_name: flask-api
-    depends_on:
-      - database
-    ports:
-      - 5000:5000
-    env_file:
-      - ./Backend/env.dev
+ #   command: python3 manage.py run -h 0.0.0.0
+ #   container_name: flask-api
+ #   depends_on:
+ #     - database
+ #   ports:
+ #     - 5000:5000
+ #   env_file:
+ #     - ./Backend/env.dev
    
-    volumes:
-        - .:/code
+ #   volumes:
+ #       - .:/code
 
 
 
@@ -36,15 +36,15 @@ services:
       - ./db-data/:/var/lib/postgresql/data=rwx/
 
   #Frontend build
-  frontend:
-    build:
-      context: ./frontend
-    ports:
-      - "3000:3000"
-    container_name: react-ui
-    stdin_open: true
-    volumes:
-       - ./frontend:/usr/src/frontend
-       - /usr/src/frontend/node_modules
+ # frontend:
+  #  build:
+  #    context: ./frontend
+  #  ports:
+  #    - "3000:3000"
+  #  container_name: react-ui
+  #  stdin_open: true
+  #  volumes:
+  #     - ./frontend:/usr/src/frontend
+  #     - /usr/src/frontend/node_modules
 
       

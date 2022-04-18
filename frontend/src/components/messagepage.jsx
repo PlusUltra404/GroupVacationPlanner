@@ -1,10 +1,10 @@
    
 import { useState } from 'react';
-import axios from 'axios';
 
-const projectID = 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2';
 
-const Modal = () => {
+
+
+const Modal = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,20 +12,18 @@ const Modal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const authObject = { 'Project-ID': projectID, 'User-Name': username, 'User-Secret': password };
 
-    try {
-      await axios.get('https://api.chatengine.io/chats', { headers: authObject });
+    props.apiservice
+      .message(
+        username,
+        password  
+      ).then(() => {
+        navigate({
+          pathname: "/chat",
+        });
+      });
 
-      localStorage.setItem('username', username);
-      localStorage.setItem('password', password);
-
-      window.location.reload();
-      setError('');
-    } catch (err) {
-      setError('Oops, incorrect credentials.');
     }
-  };
 
   return (
     <div className="wrapper">

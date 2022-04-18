@@ -23,6 +23,26 @@ export default class APIService{
         return axios.post(`${baseURL}/api/token/`, {username: user, password: password})
     }
 
+
+
+    message(user, password){
+      axios.get(`${baseURL}/api/chatscreen`, {username: user, password: password})
+    }catch (err) {
+      setError('Oops, incorrect credentials.');
+    }
+
+    joingroup(user, group, status){
+      return axios.post(`${baseURL}/api/get-started`, {user: user, group: group , status: status})
+    }
+
+    creategroup(user , title, status, profile){
+      return axios.post(`${baseURL}/api/get-started`, {created_by: user, title: title , status: status, profile: profile})
+    }
+    
+
+
+    
+
 /*    logout() {
         this.user_token = 0;
         this.config = {

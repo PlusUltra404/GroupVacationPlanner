@@ -120,21 +120,15 @@ class Group(Base):
     id = Column(Integer, primary_key=True, autoincrement="auto")
     created_by = Column(Integer)
     title = Column(String(255))
-    meta_title = Column(String(255))
-    slug = Column(String)
     status = Column(Integer)
     profile = Column(Text)
-    access_key = Column(String(255))
     membercount = Column(Integer, autoincrement = "auto")
 
 
-    def __init__(self,  created_by ,access_key, title ,meta_title, slug,status, profile):
+    def __init__(self,  created_by , title ,status, profile):
         
         self.created_by = created_by
         self.title = title
-        self.meta_title = meta_title
-        self.slug - slug
-        self.access_key = access_key
         self.status = status
         self.profile = profile
 
@@ -147,15 +141,15 @@ class Group_Member(Base):
     id = Column(Integer, primary_key=True, autoincrement="auto")
     group_id = Column(Integer)
     user_id = Column(Integer)
-    role_id = Column(Integer)
+    
     status = Column(Integer)
     
 
-    def __init__(self,  group_id , user_id ,role_id,status):
+    def __init__(self,  group_id , user_id ,status):
         
         self.group_id = group_id
         self.user_id = user_id
-        self.role_id - role_id
+        
         self.status = status
 
 class Group_Message(Base):

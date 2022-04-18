@@ -39,7 +39,7 @@ cli = FlaskGroup(server)
 
 
 
-session = Session()
+sessiondb = Session()
 
 @server.before_request
 def before_request_func():
@@ -48,10 +48,19 @@ def before_request_func():
 ############################
 # Routes for messaging
 ############################
-@server.route('/api/addgroup', methods=['POST'])
-def add_group():
+@server.route('/api/chatscreen', methods=['GET'])
+def chat_screen():
+    
+    r = requests.post('https://api.chatengine.io/chats/',
 
-    return 'h'
+        headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
+    )
+    
+
+
+
+
+    
 
 
 #API
@@ -75,6 +84,8 @@ def refresh_expiring_jwts(response):
 @server.route('/api/token', methods=["POST"])
 @cross_origin(supports_credentials=True)
 def create_token():
+    
+    
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
@@ -88,7 +99,11 @@ def create_token():
     else:
         status = False
     response = {"access_token":access_token}
-    return jsonify({'result': status})
+    session['profile'] = {
+        'password': user['password'],
+        'username': user['username'],
+    }
+    return response
 
 @server.route('/api', methods=["POST"])
 def home():
@@ -98,26 +113,33 @@ def home():
      
 
 @server.route('/api/get-started', methods=['POST'])
-# @requires_auth
 def get_started():
     json_data = request.json
     #mount group object
     group = Group(
-        created_by = json_data['creaated_by'],
+        created_by = json_data['created_by'],
         title = json_data['title'],
-        meta_title = json_data['meta_title'],
-        slug = json_data['slug'],
         status = json_data['status'],
         profile = json_data['profile']
     )
+    NewChat = [
+        {'title': Group.title},
+        {'is_direct_chat': False},
+    ]
     try:
+        r = requests.post('https://api.chatengine.io/chats/',
+            data=NewChat,
+            headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
+        )
+        
+
         # persist group 
-        session.add(group)
-        session.commit()
+        sessiondb.add(group)
+        sessiondb.commit()
         status = 'succes'
     except:
         status = 'error unknown error'
-    session.close()
+    sessiondb.close()
 
     return jsonify({'result': status})
 
@@ -129,17 +151,26 @@ def joinGroup():
     member = Group_Member(
         group_id = json_data['access_key'],
         user_id = json_data['user_id'],
-        role_id = json_data['role_id'],
         status = json_data['status']
     )
+
+    NewChat = [
+        {'username': session['profile'].get('username')}
+    ]
     try:
+        #get chat id
+        r = requests.post('https://api.chatengine.io/chats/{{chat_id}}/people/',
+            data=NewChat,
+            headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
+        )
+        
         # persist group 
-        session.add(member)
-        session.commit()
+        sessiondb.add(member)
+        sessiondb.commit()
         status = 'succes'
     except:
         status = 'error unknown error'
-    session.close()
+    sessiondb.close()
 
     return jsonify({'result': status})
 
@@ -153,7 +184,9 @@ def accesskey():
 def sendinvite():
     return render_template('Intro.html')
 
-
+############################
+# Register user to app and messaging
+############################
 @server.route('/api/register', methods=['POST'])
 def register():
     json_data = request.json
@@ -182,30 +215,16 @@ def register():
             headers={'Private-Key' : 'ca-0c4de29c-0ea1-4b4d-99f8-a6cc3f53fe39'}
         )
         # persist user
-        session.add(user)
-        session.commit()
+        sessiondb.add(user)
+        sessiondb.commit()
         status = 'success'
     except:
         status = 'this user is already registered'
      # return created user
 
-    session.close()
+    sessiondb.close()
     return jsonify({'result': status})
-
    
-
-# Routes for login, callback 
-@server.route('/api/login')
-def login():
-    json_data = request.json
-    user = User.query.filter_by(email=json_data['email']).first()
-    if user(
-            user.password, json_data['password']):
-        session['logged_in'] = True
-        status = True
-    else:
-        status = False
-    return auth0.authorize_redirect(redirect_uri='http://localhost:4200', audience = API_AUDIENCE)
 
 @server.route('/api/logout')
 def logout():
