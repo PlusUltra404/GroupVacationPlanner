@@ -6,7 +6,7 @@ from flask_migrate import Migrate
 from flask import Flask, jsonify, request,redirect,render_template, session, url_for
 from sqlalchemy import null, select
 from .models import Session, engine, Base
-from .models import User, Group, Group_Member
+from .models import User, Group, Group_Member, Event
 from urllib.request import  urlopen
 import json
 import requests
@@ -57,10 +57,36 @@ def chat_screen():
     )
     
 
-
-
-
+###########################
+# Routes for Calender
+##########################
+@server.route('/api/calender', methods=['GET'])
+def show_calender():
     
+    return 'success'
+
+
+@server.route('/api/event',methods=['POST'])
+def create_event():
+    
+    json_data = request.json
+    #mount event object
+    event = Event(
+        user_id = json_data['user_id']
+        title = json_data['title']
+        date = json_data['date']
+        content = json_data['content']
+    )
+    try:
+        # persist event
+        sessiondb.add(event)
+        sessiondb.commit()
+        status = 'succes'
+    except:
+        status = 'error unknown error'
+    sessiondb.close()
+    return jsonify({'result': status})
+   
 
 
 #API

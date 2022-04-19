@@ -293,3 +293,24 @@ class Poll_Vote(Base):
         self.updated_at = updated_at
 
 
+class Event(Base):
+    """Events"""
+
+    __tablename__ = "event"
+
+    id = Column(Integer, primary_key=True, autoincrement="auto")
+    user_id = Column(Integer)
+    title = Column(String(255))
+    created_at = Column(DateTime)
+    date = Column(String(255))
+    content = Column(Text)
+
+    def __init__(self,  user_id, title created_at, date, content):
+        
+        self.user_id = user_id
+        self.title = title
+        self.created_at = created_at
+        self.date = date
+        self.content = content
+        
+ 
