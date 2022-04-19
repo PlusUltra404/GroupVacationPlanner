@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from 'react';
+
+
 
 
 const baseURL = "http://localhost:5000";
@@ -7,6 +8,7 @@ axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] =
   "http://localhost:3000";
 axios.defaults.withCredentials = true;
+
 
 
 
@@ -27,8 +29,6 @@ export default class APIService{
 
     message(user, password){
       axios.get(`${baseURL}/api/chatscreen`, {username: user, password: password})
-    }catch (err) {
-      setError('Oops, incorrect credentials.');
     }
 
     joingroup(user, group, status){

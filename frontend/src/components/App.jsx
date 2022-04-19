@@ -10,7 +10,7 @@ import NavMenu from "./NavMenu";
 import Login from "./Login";
 import APIService from './APIService'
 import useToken from './useToken'
-
+import Calender from "./fullcalender";
 import Message from './Message'
 import Modal from "./messagepage";
 
@@ -22,7 +22,7 @@ const apiservice = new APIService() ;
         <div id="App">
           <Routes>
         <Route path="/login" element={<Login apiservice={apiservice} />} />
-        <Route path="/" element={<Message />} />
+        <Route path="/" element={<Calender />} />
         <Route path="/register" element={<Register apiservice={apiservice} />} />
       </Routes>
        {/*}   <NavMenu token={removeToken}/>

@@ -4,6 +4,9 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@fullcalendar/daygrid": "^5.11.0",
+    "@fullcalendar/interaction": "^5.11.0",
+    "@fullcalendar/react": "^5.11.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.1",
     "@testing-library/user-event": "^14.1.0",
