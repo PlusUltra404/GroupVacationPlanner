@@ -7,7 +7,6 @@ import {
   FormLabel,
 } from "react-bootstrap";
 
-import APIService from "./APIService";
 
 import { useNavigate } from "react-router-dom";
 import "../styles/Login.css";

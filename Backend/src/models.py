@@ -300,12 +300,13 @@ class Event(Base):
 
     id = Column(Integer, primary_key=True, autoincrement="auto")
     user_id = Column(Integer)
+    group_id = Column(Integer)
     title = Column(String(255))
     created_at = Column(DateTime)
     date = Column(String(255))
     content = Column(Text)
 
-    def __init__(self,  user_id, title created_at, date, content):
+    def __init__(self,user_id, title ,created_at, date, content):
         
         self.user_id = user_id
         self.title = title

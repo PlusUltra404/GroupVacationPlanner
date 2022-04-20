@@ -17,8 +17,14 @@ export default class APIService{
      
 
      create_user(firstname,lastname,email,username,password,mobile,intro,profile){
-        return axios.post(`${baseURL}/api/register`,{firstname: firstname,lastname: lastname,email: email,username: username,password: password
+        return axios.post(`${baseURL}/api/register`, {firstname: firstname,lastname: lastname,email: email,username: username,password: password
         ,mobile: mobile, intro: intro, profile: profile})
+        .then((response) => {
+          console.log(response);
+        }, (error) => {
+          console.log(error);
+        });
+        
     }
 
     login(user, password){
@@ -39,11 +45,19 @@ export default class APIService{
       return axios.post(`${baseURL}/api/get-started`, {created_by: user, title: title , status: status, profile: profile})
     }
     
+    save_event(user , title, date, content, group_id){
+      return axios.post(`${baseURL}/api/exam`, {user: user, title: title , date: date, content: content, group_id:group_id})
+    }
 
+/*    get_events(group, month){
+      axios.get(`${baseURL}/api/chatscreen`, {username: user, password: password})
+      
+
+    }
 
     
 
-/*    logout() {
+   logout() {
         this.user_token = 0;
         this.config = {
             headers: {

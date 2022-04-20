@@ -55,7 +55,6 @@ def chat_screen():
 
         headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
     )
-    
 
 ###########################
 # Routes for Calender
@@ -70,13 +69,19 @@ def show_calender():
 def create_event():
     
     json_data = request.json
+
+    user = User.query.filter_by(username=json_data['user']).first()
+
+
     #mount event object
     event = Event(
-        user_id = json_data['user_id']
-        title = json_data['title']
-        date = json_data['date']
+        user_id = user.id,
+        group_id =json_data['group_id'],
+        title = json_data['title'],
+        date = json_data['date'],
         content = json_data['content']
     )
+
     try:
         # persist event
         sessiondb.add(event)
@@ -142,21 +147,30 @@ def home():
 def get_started():
     json_data = request.json
     #mount group object
+
+    NewChat = [
+        {'title': json_data['title']},
+        {'is_direct_chat': False},
+    ]
+
+    r = requests.post('https://api.chatengine.io/chats/',
+            data=NewChat,
+            headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
+        )
+    print(r.content)
+    data = r.json()
+    print(data)
+
+
     group = Group(
         created_by = json_data['created_by'],
         title = json_data['title'],
         status = json_data['status'],
         profile = json_data['profile']
     )
-    NewChat = [
-        {'title': Group.title},
-        {'is_direct_chat': False},
-    ]
+    
+
     try:
-        r = requests.post('https://api.chatengine.io/chats/',
-            data=NewChat,
-            headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
-        )
         
 
         # persist group 
@@ -216,6 +230,7 @@ def sendinvite():
 @server.route('/api/register', methods=['POST'])
 def register():
     json_data = request.json
+    print(json_data)
       # mount User object
     user = User(
 
