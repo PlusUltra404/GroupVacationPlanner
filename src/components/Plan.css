@@ -1,6 +1,7 @@
 .plan-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
+  background: linear-gradient(120deg, #2eba7c, #2ebab7);
+  height: 90vh;
 }

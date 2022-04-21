@@ -1,6 +1,54 @@
-.profile-container {
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(120deg, #2eba7c, #2ebab7);
+  height: 90vh;
+}
+.profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.left {
+  height: 370px;
+  width: 450px;
+  background-color: white;
+  border-radius: 10px;
+  border-color: black;
+  border-width: 2px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 10px;
+  margin-left: 50px;
+}
+.avatar {
+  vertical-align: middle;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+}
+.right {
+  background-color: white;
+  border-radius: 10px;
+  border-color: black;
+  border-width: 2px;
+  width: 900px;
+  margin-right: 50px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.info {
+  margin: 10px;
+  font-size: 24px;
+  font-family: "Roboto";
+  font-weight: 300;
+}
+.pic-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
 }
