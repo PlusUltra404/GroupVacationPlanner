@@ -71,7 +71,7 @@
   flex-direction: row;
   justify-content: flex-start;
 }
-.button {
+.buttony {
   font-family: "Roboto";
   font-weight: bold;
   font-size: 14px;
@@ -106,4 +106,16 @@
   font-size: 25px;
   font-weight: 500;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.submit-buttony {
+  font-family: "Roboto";
+  font-weight: bold;
+  font-size: 14px;
+  color: #ffffff;
+  height: 40px;
+  width: 60px;
+  margin-top: 8px;
+  background-color: #2eba7c;
+  border-radius: 8px;
+  border: none;
 }

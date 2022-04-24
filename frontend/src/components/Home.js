@@ -173,18 +173,18 @@ export class Home extends Component {
                 />
               </div>
 
-              <button className="button" id="addTodoButton">
+              <button className="buttony" id="addTodoButton">
                 Add
               </button>
               <h1 className="sub-headings">My Bucket List</h1>
               <ul className="todo-items-container" id="todoItemsContainer"></ul>
-              <button className="button" id="saveTodoButton">
+              <button className="buttony" id="saveTodoButton">
                 Save
               </button>
             </div>
           </div>
           <div className="calender">
-            <Calender {...this.props}/>
+            <Calender {...this.props} />
           </div>
         </div>
       </div>

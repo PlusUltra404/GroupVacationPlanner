@@ -92,7 +92,7 @@ function Profile(props) {
             <p className="info">Email: {Email}</p>
             <p className="info">Phone Number: {Mobile}</p>
             <p className="info">Bio: {Intro}</p>
-            <button className="button" onClick={() => setEdit(!edit)}>
+            <button className="buttony" onClick={() => setEdit(!edit)}>
               Edit
             </button>
           </div>
@@ -135,7 +135,7 @@ function Profile(props) {
                     onChange={(e) => setintro(e.target.value)}
                   ></input>
 
-                  <button className="button" onClick={handleSubmit}>
+                  <button className="submit-buttony" onClick={handleSubmit}>
                     Submit
                   </button>
                 </form>
