@@ -259,7 +259,7 @@ def get_started():
     group = Group(
         created_by = username,
         title = json_data['title'],
-        chatid= 2,
+        chatid= data['id'],
         membercount=0,
         profile = json_data['profile']
     )
@@ -275,8 +275,8 @@ def get_started():
     except:
         status = 'error unknown error'
     sessiondb.close()
-    return data['id']
-   # return jsonify({'result': status})
+
+    return jsonify({'result': status})
 
 @server.route('/api/join',methods=['POST'])
 #@requires_auth
@@ -303,11 +303,9 @@ def joinGroup():
         user_id = id
        
     )
+    NewChat = {'username': session['profile'].get('username')}
 
-    NewChat = [
-        {'username': session['profile'].get('username')}
-    ]
-
+   
     url = 'https://api.chatengine.io/chats/'+str(chat_id)+'/people/'
 
     #get chat id
