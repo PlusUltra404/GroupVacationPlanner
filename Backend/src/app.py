@@ -275,7 +275,7 @@ def get_started():
     except:
         status = 'error unknown error'
     sessiondb.close()
-    return data
+    return data['id']
    # return jsonify({'result': status})
 
 @server.route('/api/join',methods=['POST'])
@@ -308,7 +308,7 @@ def joinGroup():
         {'username': session['profile'].get('username')}
     ]
 
-    url = 'https://api.chatengine.io/chats/'+chat_id+'/people/'
+    url = 'https://api.chatengine.io/chats/'+str(chat_id)+'/people/'
 
     #get chat id
     r = requests.post(url,
