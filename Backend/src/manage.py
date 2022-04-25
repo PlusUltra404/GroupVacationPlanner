@@ -62,13 +62,13 @@ def seed_db():
     #Groups
     session.add(models.Group(created_by="asearle",
         title="Japan Getaway",
-        
+        chatid= 112714,
         profile="Track team vacation ",
         membercount = 4
     ))
     session.add(models.Group(created_by="shinebright",
         title="Anash Bash",
-        
+        chatid= 112715,
         profile="Bachelorette party ",
         membercount= 2
     ))
