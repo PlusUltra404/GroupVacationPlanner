@@ -43,7 +43,7 @@ function App() {
         <Route path="/plan" element={<Plan />} />
         <Route path="/profile" element={<Profile apiservice={apiservice} username={username}
               password={password}/>} />
-        <Route path="/groups" element={<Groups apiservice={apiservice}/>} />
+        <Route path="/groups" element={<Groups apiservice={apiservice} username={username}/>} />
         <Route
           path="/messages"
           element={
