@@ -232,6 +232,7 @@ def home():
 
 @server.route('/api/get-started', methods=['POST'])
 def get_started():
+    id = ' '
     username = request.json.get("username", None)
     json_data = request.json
     #mount group object
@@ -251,11 +252,14 @@ def get_started():
     data = r.json()
     print(data)
 
+    for key in data:
+        id = key.id
+
 
     group = Group(
         created_by = username,
         title = json_data['title'],
-        chatid= data.id,
+        chatid= id,
         profile = json_data['profile']
     )
     
