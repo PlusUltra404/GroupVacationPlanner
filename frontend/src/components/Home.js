@@ -13,7 +13,7 @@ export class Home extends Component {
   };
 
   work = () => {
-    this.props.apiservice.get_event().then((result) => {
+    this.props.apiservice.get_event(this.props.username).then((result) => {
       console.log(result.data);
       this.setState({ Data: result.data });
     });
