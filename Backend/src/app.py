@@ -165,13 +165,13 @@ def update_user():
     json_data = request.json
     Username = request.json.get("username", None)
     user_obj = sessiondb.query(User).filter_by(username = Username )\
-    .update({"username": json_data["username"],
-    "firstname": json_data["firstname"],
-    "lastname": json_data["lastname"],
-    "mobile": json_data["mobile"],
-    "intro": json_data["intro"],
-    "email": json_data["email"],
-    "password": json_data["password"]
+    .update({'username': json_data['username'],
+    'firstname': json_data['firstname'],
+    'lastname': json_data['lastname'],
+    'mobile': json_data['mobile'],
+    'intro': json_data['intro'],
+    'email': json_data['email'],
+    'password': json_data['password']
     })
 
     schema = UserSchema(many=True)
