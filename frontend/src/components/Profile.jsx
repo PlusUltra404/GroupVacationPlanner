@@ -27,25 +27,25 @@ function Profile(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (username == "") {
+    if (username === "") {
       setusername(Username);
     }
-    if (email == "") {
+    if (email === "") {
       setemail(Email);
     }
-    if (password == "") {
+    if (password === "") {
       setpassword(Password);
     } 
-    if (intro == "") {
+    if (intro === "") {
       setintro(Intro);
     }
-    if (mobile == "") {
+    if (mobile === "") {
       setmobile(Mobile);
     }
-    if (firstname == "") {
+    if (firstname === "") {
       setfirst(Firstname);
     }
-    if (lastname == "") {
+    if (lastname === "") {
       setlast(Lastname);
     }
     props.apiservice.update_user()(

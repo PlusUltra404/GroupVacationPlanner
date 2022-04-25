@@ -104,7 +104,7 @@ def get_events():
     id = ' '
     group_id = ' '
 
-    user = sessiondb.query(User).filter_by(username= json_data['user'] )
+    user = sessiondb.query(User).filter_by(username = json_data['user'] )
     for key in user:
         id = key.id
     group = sessiondb.query(Group_Member).filter_by(user_id= id)
@@ -151,7 +151,7 @@ def get_groups():
 def get_users():
 
     Username = request.json.get("username", None)
-    user_obj = sessiondb.query(User).filter_by(username= Username )
+    user_obj = sessiondb.query(User).filter_by(username = Username )
 
     schema = UserSchema(many=True)
     user = schema.dump(user_obj)
@@ -164,7 +164,7 @@ def get_users():
 def update_user():
     json_data = request.json
     Username = request.json.get("username", None)
-    user_obj = sessiondb.query(User).filter_by(username= Username )\
+    user_obj = sessiondb.query(User).filter_by(username = Username )\
     .update({"username": json_data["username"],
     "firstname": json_data["firstname"],
     "lastname": json_data["lastname"],
