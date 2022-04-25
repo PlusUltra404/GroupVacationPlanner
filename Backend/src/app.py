@@ -255,6 +255,7 @@ def get_started():
     group = Group(
         created_by = username,
         title = json_data['title'],
+        chatid= data.id,
         profile = json_data['profile']
     )
     
@@ -272,23 +273,40 @@ def get_started():
 
     return jsonify({'result': status})
 
-@server.route('/api/join')
+@server.route('/api/join',methods=['POST'])
 #@requires_auth
 def joinGroup():
     json_data = request.json
     # receives data from frontend. parses data into columns to be inputted
+    id = ' '
+    group_id = ' '
+    chat_id = 2
+
+
+    group = sessiondb.query(Group).filter_by(title= json_data['group'] )
+    
+    for key in group:
+        group_id = key.id
+        chat_id = key.chatid
+
+    user = sessiondb.query(User).filter_by(username= json_data['username'] )
+    for key in user:
+        id = key.id
+    
     member = Group_Member(
-        group_id = json_data['access_key'],
-        user_id = json_data['user_id']
+        group_id = group_id,
+        user_id = id
        
     )
 
     NewChat = [
         {'username': session['profile'].get('username')}
     ]
+   
+    
     try:
         #get chat id
-        r = requests.post('https://api.chatengine.io/chats/{{chat_id}}/people/',
+        r = requests.post('https://api.chatengine.io/chats/{chat_id}/people/',
             data=NewChat,
             headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
         )
@@ -305,9 +323,7 @@ def joinGroup():
 
 
 
-@server.route('/api/send-access-key')
-def accesskey():
-    return render_template('join.html')
+
 
 @server.route('/api/send-invite')
 def sendinvite():
@@ -332,40 +348,21 @@ def register():
         intro=json_data['intro'],
         profile=json_data['profile']       
     )
-    chatuser = [
-        {'first_name': User.firstname},
-        {'last_name': User.lastname},
-        {'username' : User.username},
-        {'email' : User.email},
-        {'secret' : User.password},
-        ]
-    chat = {'first_name': User.firstname,
-            'last_name' : User.lastname , 
-            'username' : User.username , 
-            'email' : User.email, 
-            'secret' : User.password
-            }
-    url = "https://api.chatengine.io/users/"
 
-    payload={'username': 'dsf',
-            'secret': 'sdfsd',
-            'first_name': 'dsfs',
-            'last_name': 'df',
-            'email': 'sfds'}
-    files=[]
-    headers = {'Private-Key': '99ca68a1-4735-4bb7-8182-52eaa4b095e9'}
+    chat = {
+        'first_name': User.firstname,
+        'last_name' : User.lastname , 
+        'username' : User.username , 
+        'email' : User.email, 
+        'secret' : User.password
+        }
+    
 
-    response = requests.request("POST", url, headers=headers, data=payload, files=files)
-     #   r = requests.request("POST", 'https://api.chatengine.io/users/',
-     #           data={'first_name' : User.firstname,
-     #               'last_name' : User.lastname,
-     #               'username' : User.username,
-     #               'email' : User.email,
-     #               'secret' : User.password
-     #               },
-     #           headers={'Private-Key' : '99ca68a1-4735-4bb7-8182-52eaa4b095e9'}
-     #           )
- 
+    r = requests.post('https://api.chatengine.io/users/',
+            data=chat,
+            headers={'Private-Key': '99ca68a1-4735-4bb7-8182-52eaa4b095e9'}
+        )
+
     try:
             # persist user
         sessiondb.add(user)
@@ -376,8 +373,8 @@ def register():
      # return created user
 
     sessiondb.close()
-    return(response.text)
-    #return jsonify({'result': status})
+  
+    return jsonify({'result': status})
 
 @server.route('/api/logout')
 def logout():
@@ -388,8 +385,6 @@ def logout():
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
     return response
-   # params = {'returnTo': url_for('home', _external=True), 'client_id': 'ECUr7U2H6cH2fdYno1UWDIOaRYwDwsA1'}
-   # return redirect('https://https://dev-dm6nugc4.us.auth0.com' + '/v2/logout?' + urlencode(params))
 
 @server.route('/api/callback')
 def callback_handling():

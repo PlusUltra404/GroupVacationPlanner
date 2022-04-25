@@ -31,7 +31,7 @@ export default class APIService{
     }
 
     joingroup(username, group){
-      return axios.post(`/api/get-started`, {username: username, group: group })
+      return axios.post(`/api/join`, {username: username, group: group })
     }
 
     creategroup(username , title,  profile){
