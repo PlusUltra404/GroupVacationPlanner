@@ -1,11 +1,38 @@
 import React, { Component } from "react";
 import Calender from "./fullcalender";
 import Header from "./Header";
+import NotificationRender from "./NotificationRender";
 
 import "../styles/Home.css";
 
 export class Home extends Component {
   static displayName = Home.name;
+
+  state = {
+    Data: [
+      {
+        content: "Flight is at 9AM",
+        date: "2022-04-10",
+        group_id: 2,
+        id: 1,
+        title: "Flight",
+      },
+      {
+        content: "Go on food tour in japan",
+        date: "2022-05-15",
+        group_id: 1,
+        id: 2,
+        title: "Food Tour",
+      },
+    ],
+  };
+
+  work = (props) => {
+    props.apiservice.get_event().then((result) => {
+      console.log(result.data);
+      this.setState({ Data: result.data });
+    });
+  };
 
   componentDidMount() {
     const script = document.createElement("script");
@@ -150,10 +177,14 @@ export class Home extends Component {
     for (let todo of todoList) {
       createAndAppendTodo(todo);
     }
+
     document.body.appendChild(script);
+
+    //  this.work()
   }
 
   render() {
+    const { Data } = this.state;
     return (
       <div>
         <Header />
@@ -185,6 +216,14 @@ export class Home extends Component {
           </div>
           <div className="calender">
             <Calender {...this.props} />
+            <div className="notifications">
+              <h1>Notifications</h1>
+              <div className="notification-container">
+                {Data.map((item) => (
+                  <NotificationRender Data={item} key={item.id} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

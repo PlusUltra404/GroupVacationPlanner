@@ -1,10 +1,9 @@
 .home-container {
-  background-color: white;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   background: linear-gradient(120deg, #2eba7c, #2ebab7);
-  height: 90vh;
+  min-height: 90vh;
 }
 .welcome {
   font-size: 25px;
@@ -18,9 +17,10 @@
 }
 .calender {
   width: 500px;
-  height: 500px;
   margin-top: 20px;
-  margin-right: 70px;
+  margin-right: 100px;
+  display: flex;
+  flex-direction: column;
 }
 .to-do-list {
   display: flex;
@@ -116,4 +116,26 @@
   font-size: 23px;
   font-weight: 400;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.notification-container {
+  border-radius: 12px;
+  border-width: 0px;
+  border-color: black;
+  background-color: white;
+  padding: 25px;
+  border-style: solid;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.notifications {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.each {
+  border-color: black;
+  border-width: 2px;
+  border-bottom-style: solid;
 }

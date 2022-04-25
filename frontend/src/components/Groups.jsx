@@ -9,57 +9,76 @@ import {
   FormControl,
   FormLabel,
 } from "react-bootstrap";
-
+import GroupRender from "./GroupRender";
 import "../styles/Groups.css";
 import { listenBySelector } from "@fullcalendar/react";
 
 export const GroupEntry = (props) => {
-  
   return (
-      <div className="GroupEntry">
-          
-          <p>
-              {"Name: " + props.title + " | " +
-              "profile: " + props.profile + " | " +
-              "count: " + props.count}
-          </p>
-      </div>
-  )
-}
+    <div className="GroupEntry">
+      <p>
+        {"Name: " +
+          props.title +
+          " | " +
+          "profile: " +
+          props.profile +
+          " | " +
+          "count: " +
+          props.count}
+      </p>
+    </div>
+  );
+};
 
 export const Groups = (props) => {
   const [name, setName] = useState("");
   const [profile, setProfile] = useState("");
   const navigate = useNavigate();
   const [bool, setbool] = useState(false);
-    
-  var list= [];
-  if (bool ==false){
-      setbool(true);
-      props.apiservice.get_groups().then((result) => {
-        console.log(result.data);
-        for(let i=0; i <result.data.length; i++){
-          const title = result['data'][0]['title'];
-          const profile = result['data'][0]['profile'];
-          const count = result['data'][0]['membercount']
+
+  const [dummy, setDummy] = useState([]);
+
+  /*  const dummy = [
+    {
+      created_by: "asearle",
+      id: 1,
+      membercount: null,
+      profile: "Track team vacation ",
+      title: "Japan Getaway",
+    },
+    {
+      created_by: "chaitanya amdnru",
+      id: 2,
+      membercount: null,
+      profile: "Bachelorette party ",
+      title: "Anash Bash",
+    },
+  ];*/
+
+  //  var list = [];
+  if (bool == false) {
+    setbool(true);
+    props.apiservice.get_groups().then((result) => {
+      var list = result.data;
+      console.log(result.data);
+      setDummy(list);
+      /* for (let i = 0; i < result.data.length; i++) {
+        const title = result["data"][0]["title"];
+        const profile = result["data"][0]["profile"];
+        const count = result["data"][0]["membercount"];
         //  list.push({title,profile,count});
-          list.push(
-            <GroupEntry
-            title = {result['data'][0]['title']} 
-            profile = {result['data'][0]['profile']}
-            count = {result['data'][0]['membercount']} />
-  
-          );
-          console.log(list);
-        }
-  
-      });
-    }
-  
+        list.push(
+          <GroupEntry
+            title={result["data"][0]["title"]}
+            profile={result["data"][0]["profile"]}
+            count={result["data"][0]["membercount"]}
+          />
+        );
+        console.log(list);
+      }*/
+    });
+  }
 
-
-
-  
   /*useEffect(() => {
     props.apiservice.get_groups().then((result) => {
       console.log(result.data);
@@ -81,9 +100,6 @@ export const Groups = (props) => {
     });
  
   }, []); */
-
-
-
 
   const handleSubmit = (event) => {
     props.apiservice.creategroup(props.username, name, profile).then(() => {
@@ -115,9 +131,9 @@ export const Groups = (props) => {
                   type="text"
                   className="username-input-filed"
                   name="groupname"
-                   value= {name}
+                  value={name}
                   placeholder="Group Name"
-                   onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </FormGroup>
               <Form.Group
@@ -129,14 +145,14 @@ export const Groups = (props) => {
                 <Form.Control
                   type="text"
                   className="username-input-filed"
-                  value= {profile}
+                  value={profile}
                   placeholder="Description"
                   onChange={(e) => setProfile(e.target.value)}
                 />
               </Form.Group>
               <Button
                 className="login-button"
-                  onClick={handleSubmit}
+                onClick={handleSubmit}
                 variant="primary"
                 block
                 size="lg"
@@ -152,38 +168,14 @@ export const Groups = (props) => {
           <h1 className="heading">Groups you want to join</h1>
           <div className="info-card">
             <div>
-              <div className="each-group">
-                <div>{list}</div>
-                { /* <h1 className="name">Group Name 1</h1>
-                <p className="desc">
-                  Group Description 1 (Trip to New York).....
-                </p>
-                <button className="button">Join Group</button>
-              </div>
-              <div className="each-group">
-                <h1 className="name">Group Name 2</h1>
-                <p className="desc">Group Description 2 ......</p>
-                <button className="button">Join Group</button>
-              </div>
-              <div className="each-group">
-                <h1 className="name">Group Name 2</h1>
-                <p className="desc">Group Description 2 ......</p>
-                <button className="button">Join Group</button>
-              </div>
-              <div className="each-group">
-                <h1 className="name">Group Name 2</h1>
-                <p className="desc">Group Description 2 ......</p>
-                <button className="button">Join Group</button>
-              </div>
-              
-            </div>
-            */}
-              </div>
+              {dummy.map((item) => (
+                <GroupRender Data={item} key={item.id} />
+              ))}
             </div>
           </div>
         </div>
       </div>
-  </div>
+    </div>
   );
-}
+};
 export default Groups;

@@ -1,0 +1,19 @@
+.each {
+  border-color: black;
+  border-width: 2px;
+  border-bottom-style: solid;
+  padding-bottom: 8px;
+}
+.heading {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: #2eba7c;
+}
+.content {
+  font-size: 15px;
+  font-weight: 400;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
