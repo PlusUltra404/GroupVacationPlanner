@@ -42,12 +42,12 @@ export default class APIService{
       return axios.post(`/api/event`, {user: user, title: title , date: date, content: content, group_id:group_id})
     }
 
-    get_event(){
-      return axios.get(`/api/events`)
+    get_event(user){
+      return axios.post(`/api/events`,{user: user})
     }
 
-    get_groups(){
-      return axios.get(`/api/groups`)
+    get_groups(user){
+      return axios.post(`/api/groups`, {user: user})
     }
 
 

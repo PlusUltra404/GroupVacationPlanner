@@ -58,7 +58,7 @@ export const Groups = (props) => {
   //  var list = [];
   if (bool == false) {
     setbool(true);
-    props.apiservice.get_groups().then((result) => {
+    props.apiservice.get_groups(props.username).then((result) => {
       var list = result.data;
       console.log(result.data);
       setDummy(list);

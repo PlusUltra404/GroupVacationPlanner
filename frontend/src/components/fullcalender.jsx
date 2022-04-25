@@ -11,48 +11,19 @@ export default function Calender(props) {
   const [date, setdate] = useState("");
   const [dummy, setDummy] = useState([]);
 
-  var list= [] ;
+
   useEffect(() => {
-    props.apiservice.get_event().then((result) => {
+    props.apiservice.get_event(props.username).then((result) => {
       console.log(result.data);
       var list = result.data;
       setDummy(list);
-    /*  console.log(result.data[0]['title'])
-      console.log(result.data[0]['date'])
-      for(let i=0; i <result.data.length; i++){
-        console.log(i)
-        const titleT = result['data'][i]['title'];
-        const dateT = result['data'][i]['date'];
-        list.push({titleT,dateT});
-        console.log(titleT);
-        console.log(dateT);
-        console.log(list);
-       
-        
- 
-        
-      }
-      */
+   
       console.log(dummy); 
     //  setEvents(result.data)
 
     });
  
   }, []);
-
-
-
-  function renderEventContent(eventInfo) {
-
-    return (
-
-      <>
-        <b>{eventInfo.timeText}</b>
-        <i>{eventInfo.event.title}</i>
-      </>
-    )
-  }
-
   
  
 
@@ -65,7 +36,7 @@ export default function Calender(props) {
           initialView="dayGridMonth"
           weekends={true}
           events= {dummy}
-         // eventContent={renderEventContent}
+         
           selectable={true}
           headerToolbar= {
             

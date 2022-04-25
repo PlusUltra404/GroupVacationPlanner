@@ -69,13 +69,17 @@ def show_calender():
 def create_event():
     
     json_data = request.json
+    id = ' '
 
-    user = User.query.filter_by(username=json_data['user']).first()
+    user = sessiondb.query(User).filter_by(username= json_data['user'] )
+    for key in user:
+        id = key.id
+   
 
 
     #mount event object
     event = Event(
-        user_id = user.id,
+        user_id = id,
         group_id =json_data['group_id'],
         title = json_data['title'],
         date = json_data['date'],
@@ -93,11 +97,25 @@ def create_event():
     return jsonify({'result': status})
    
 
-@server.route('/api/events',methods=['GET'])
+@server.route('/api/events',methods=['POST'])
 def get_events():
+
+    json_data = request.json
+    id = ' '
+    group_id = ' '
+
+    user = sessiondb.query(User).filter_by(username= json_data['user'] )
+    for key in user:
+        id = key.id
+    group = sessiondb.query(Group_Member).filter_by(user_id= id)
+    for key in group:
+        group_id = key.group_id
+
+   
+
      # fetching from the database
 
-    event_objects = sessiondb.query(Event).all()
+    event_objects = sessiondb.query(Event).filter_by(group_id = group_id)
     
     # transforming into JSON-serializable objects
     schema = EventSchema(many=True)
@@ -108,11 +126,17 @@ def get_events():
     sessiondb.close()
     return jsonify(events)
 
-@server.route('/api/groups',methods=['GET'])
+@server.route('/api/groups',methods=['POST'])
 def get_groups():
+    json_data = request.json
+    id = ' '
+
+    user = sessiondb.query(User).filter_by(username= json_data['user'] )
+    for key in user:
+        id = key.id
      # fetching from the database
 
-    group_objects = sessiondb.query(Group).all()
+    group_objects = sessiondb.query(Group).filter(Group_Member.user_id != id)
     
     # transforming into JSON-serializable objects
     schema = GroupSchema(many=True)
