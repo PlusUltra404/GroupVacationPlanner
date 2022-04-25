@@ -235,25 +235,27 @@ def get_started():
     id = ' '
     username = request.json.get("username", None)
     json_data = request.json
+
+    user = sessiondb.query(User).filter_by(username= username )
+    Upassword = ' '
+    for key in user:
+        Upassword = key.password
     #mount group object
 
 
     NewChat = {
         'title': json_data['title'],
         'is_direct_chat': False
-        }
+    }
     
 
     r = requests.post('https://api.chatengine.io/chats/',
             data=NewChat,
-            headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
-        )
+            headers={'User-Name' : username, 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : Upassword}
+    )
     print(r.content)
     data = r.json()
     print(data)
-
- #   for key in data:
- #       id = key.id
 
 
     group = Group(
