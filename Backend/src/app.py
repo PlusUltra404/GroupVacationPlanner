@@ -260,6 +260,7 @@ def get_started():
         created_by = username,
         title = json_data['title'],
         chatid= 2,
+        membercount=0,
         profile = json_data['profile']
     )
     
