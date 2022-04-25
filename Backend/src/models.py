@@ -123,12 +123,12 @@ class Group(Base):
     membercount = Column(Integer, autoincrement = "auto")
 
 
-    def __init__(self,  created_by , title , profile):
+    def __init__(self,  created_by , title , profile, membercount):
         
         self.created_by = created_by
         self.title = title
-     
         self.profile = profile
+        self.membercount = membercount
 
     
 class GroupSchema(Schema):
