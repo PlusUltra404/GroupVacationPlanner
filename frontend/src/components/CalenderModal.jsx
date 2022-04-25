@@ -15,6 +15,7 @@ const CalenderModal = (props) => {
     
  const handleSubmit = (event) => {
     props.apiservice.save_event(props.username, title, props.date,content, 1,1);
+    props.setModalVisible(!props.modalVisible)
     // Prevent page reload
     
   };
