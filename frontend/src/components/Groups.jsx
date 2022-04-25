@@ -135,7 +135,7 @@ export const Groups = (props) => {
           <div className="info-card">
             <div>
               {dummy.map((item) => (
-                <GroupRender Data={item} key={item.id} username={props.username}/>
+                <GroupRender Data={item} key={item.id} username={props.username} apiservice={props.apiservice}/>
               ))}
             </div>
           </div>
