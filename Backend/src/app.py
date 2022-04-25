@@ -252,14 +252,14 @@ def get_started():
     data = r.json()
     print(data)
 
-    for key in data:
-        id = key.id
+ #   for key in data:
+ #       id = key.id
 
 
     group = Group(
         created_by = username,
         title = json_data['title'],
-        chatid= id,
+        chatid= 2,
         profile = json_data['profile']
     )
     
@@ -274,8 +274,8 @@ def get_started():
     except:
         status = 'error unknown error'
     sessiondb.close()
-
-    return jsonify({'result': status})
+    return data
+   # return jsonify({'result': status})
 
 @server.route('/api/join',methods=['POST'])
 #@requires_auth
@@ -306,14 +306,17 @@ def joinGroup():
     NewChat = [
         {'username': session['profile'].get('username')}
     ]
-   
-    
-    try:
-        #get chat id
-        r = requests.post('https://api.chatengine.io/chats/{chat_id}/people/',
+
+    url = 'https://api.chatengine.io/chats/'+chat_id+'/people/'
+
+    #get chat id
+    r = requests.post(url,
             data=NewChat,
             headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password')}
-        )
+    )
+        
+    
+    try:
         
         # persist group 
         sessiondb.add(member)
