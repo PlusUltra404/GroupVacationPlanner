@@ -9,26 +9,11 @@ export class Home extends Component {
   static displayName = Home.name;
 
   state = {
-    Data: [
-      {
-        content: "Flight is at 9AM",
-        date: "2022-04-10",
-        group_id: 2,
-        id: 1,
-        title: "Flight",
-      },
-      {
-        content: "Go on food tour in japan",
-        date: "2022-05-15",
-        group_id: 1,
-        id: 2,
-        title: "Food Tour",
-      },
-    ],
+    Data: [],
   };
 
-  work = (props) => {
-    props.apiservice.get_event().then((result) => {
+  work = () => {
+    this.props.apiservice.get_event().then((result) => {
       console.log(result.data);
       this.setState({ Data: result.data });
     });
@@ -180,7 +165,7 @@ export class Home extends Component {
 
     document.body.appendChild(script);
 
-    //  this.work()
+      this.work()
   }
 
   render() {

@@ -131,7 +131,7 @@ export const Groups = (props) => {
           </div>
         </div>
         <div className="groups-info">
-          <h1 className="heading">Groups you want to join</h1>
+          <h1 className="headings">Groups you want to join</h1>
           <div className="info-card">
             <div>
               {dummy.map((item) => (
