@@ -39,7 +39,7 @@ function App() {
           path="/register"
           element={<Register apiservice={apiservice} />}
         />
-        <Route path="/home" element={<Home apiservice={apiservice}/>} />
+        <Route path="/home" element={<Home apiservice={apiservice} username={username}/>} />
         <Route path="/plan" element={<Plan />} />
         <Route path="/profile" element={<Profile apiservice={apiservice} username={username}
               password={password}/>} />

@@ -9,13 +9,15 @@ export default function Calender(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [title, settitle] = useState("");
   const [date, setdate] = useState("");
-  const [event, setEvent] = useState([{title: ' ' , date: ' ' }]);
+  const [dummy, setDummy] = useState([]);
 
   var list= [] ;
   useEffect(() => {
     props.apiservice.get_event().then((result) => {
       console.log(result.data);
-      console.log(result.data[0]['title'])
+      var list = result.data;
+      setDummy(list);
+    /*  console.log(result.data[0]['title'])
       console.log(result.data[0]['date'])
       for(let i=0; i <result.data.length; i++){
         console.log(i)
@@ -27,21 +29,16 @@ export default function Calender(props) {
         console.log(list);
        
         
-       // settitle(titleT);
-       // setdate(dateT);
-      //  setEvent(event => [...event, {title,date}]);
+ 
         
       }
-      console.log(event);
+      */
+      console.log(dummy); 
     //  setEvents(result.data)
 
     });
  
   }, []);
-  
-  function UpdateCalender(){
-    return 1;
-  }
 
 
 
@@ -57,16 +54,7 @@ export default function Calender(props) {
   }
 
   
-  /* const handleClick = (event) => {
-    props.apiservice.save_event(props.username, title, date);
-    // Prevent page reload
-    
-  };
-*/
-  
-  const onEventAdded = (event) => {
-  //  setEvents([...events]);
-  };
+ 
 
       
         return (
@@ -76,8 +64,8 @@ export default function Calender(props) {
           plugins={[ dayGridPlugin, interactionPlugin  ]}
           initialView="dayGridMonth"
           weekends={true}
-          events= {list}
-          eventContent={renderEventContent}
+          events= {dummy}
+         // eventContent={renderEventContent}
           selectable={true}
           headerToolbar= {
             
@@ -88,7 +76,6 @@ export default function Calender(props) {
             }
           }
           dateClick={ function(info) {
-            alert('Clicked on: ' + info.dateStr);
             setdate(info.dateStr);
           }
         }

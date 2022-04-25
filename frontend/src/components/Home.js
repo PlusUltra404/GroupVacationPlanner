@@ -191,7 +191,7 @@ export class Home extends Component {
         <div class="home-container">
           <div className="greeting">
             <h1 className="welcome">
-              Welcome Username! Plan your upcoming trip!
+              Welcome {this.props.username}! Plan your upcoming trip!
             </h1>
             <div className="to-do-list">
               <h1 className="sub-headings">Add Places you plan to visit</h1>

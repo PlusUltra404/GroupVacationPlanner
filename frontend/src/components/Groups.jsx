@@ -62,45 +62,11 @@ export const Groups = (props) => {
       var list = result.data;
       console.log(result.data);
       setDummy(list);
-      /* for (let i = 0; i < result.data.length; i++) {
-        const title = result["data"][0]["title"];
-        const profile = result["data"][0]["profile"];
-        const count = result["data"][0]["membercount"];
-        //  list.push({title,profile,count});
-        list.push(
-          <GroupEntry
-            title={result["data"][0]["title"]}
-            profile={result["data"][0]["profile"]}
-            count={result["data"][0]["membercount"]}
-          />
-        );
-        console.log(list);
-      }*/
+    
     });
   }
 
-  /*useEffect(() => {
-    props.apiservice.get_groups().then((result) => {
-      console.log(result.data);
-      for(let i=0; i <result.data.length; i++){
-        const title = result['data'][0]['title'];
-        const profile = result['data'][0]['profile'];
-        const count = result['data'][0]['membercount']
-      //  list.push({title,profile,count});
-        list.push(
-          <GroupEntry
-          title = {result['data'][0]['title']} 
-          profile = {result['data'][0]['profile']}
-          count = {result['data'][0]['membercount']} />
-
-        );
-        console.log(list);
-      }
-
-    });
- 
-  }, []); */
-
+  
   const handleSubmit = (event) => {
     props.apiservice.creategroup(props.username, name, profile).then(() => {
       navigate({
@@ -157,7 +123,7 @@ export const Groups = (props) => {
                 block
                 size="lg"
                 type="submit"
-                // disabled={!validateForm()}
+               
               >
                 Create
               </Button>
