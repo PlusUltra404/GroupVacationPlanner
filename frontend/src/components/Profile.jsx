@@ -48,14 +48,13 @@ function Profile(props) {
     if (lastname === "") {
       setlast(Lastname);
     }
-    props.apiservice.update_user()(
-      username,
+    props.apiservice.update_user(username,
       email,
       password,
       intro,
       mobile,
       firstname,
-      lastname
+      lastname)(
     );
   }
   useEffect(() => {
