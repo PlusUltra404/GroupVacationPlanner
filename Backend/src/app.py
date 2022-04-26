@@ -174,11 +174,9 @@ def update_user():
     'password': json_data['password']
     })
 
-    schema = UserSchema(many=True)
-    user = schema.dump(user_obj)
 
     sessiondb.close()
-    return jsonify(user)
+    return jsonify({'result': 'status'})
 
 #API
 @server.after_request
@@ -248,7 +246,7 @@ def get_started():
         title = json_data['title'],
         chatid= json_data['id'],
         membercount=0,
-        profile = json_data ['profile']
+        profile = json_data['profile']
     )
     
 

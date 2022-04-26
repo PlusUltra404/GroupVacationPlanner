@@ -44,8 +44,8 @@ export default class APIService{
       return axios.post(`/api/join`, {username: username, group: group })
     }
 
-    creategroup(username , title,  profile){
-      return axios.post(`/api/get-started`, {username: username, title: title , profile: profile})
+    creategroup(username , title,  profile, id){
+      return axios.post(`/api/get-started`, {username: username, title: title , profile: profile, id: id})
     }
     
     save_event(user , title, date, content, group_id){
