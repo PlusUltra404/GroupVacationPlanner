@@ -243,27 +243,12 @@ def get_started():
     #mount group object
 
 
-    NewChat = {
-        'title': json_data['title'],
-        'is_direct_chat': False
-    }
-    
-
-    r = requests.post('https://api.chatengine.io/chats/',
-            data=NewChat,
-            headers={{'User-Name' : username, 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : Upassword} }
-    )
-    print(r.content)
-    data = r.json()
-    print(data)
-
-
     group = Group(
         created_by = username,
         title = json_data['title'],
-        chatid= data['id'],
+        chatid= json_data['id'],
         membercount=0,
-        profile = json_data['profile']
+        profile = json_data ['profile']
     )
     
 
@@ -305,16 +290,7 @@ def joinGroup():
         user_id = id
        
     )
-    NewChat = {'username': session['profile'].get('username')}
-
    
-    url = 'https://api.chatengine.io/chats/'+str(chat_id)+'/people/'
-
-    #get chat id
-    r = requests.post(url,
-            data=NewChat,
-            headers={'User-Name' : session['profile'].get('username'), 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : session['profile'].get('password'), 'Private-Key' : '99ca68a1-4735-4bb7-8182-52eaa4b095e9'}
-    )
         
     
     try:

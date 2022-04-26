@@ -22,6 +22,16 @@ export default class APIService{
     login(user, password){
         return axios.post(`/api/token`, {username: user, password: password})
     }
+    create_chat(username , title, password){
+      return axios.post('https://api.chatengine.io/chats/',{ 'title': title,'is_direct_chat': 'False'}, {headers: {'User-Name' : username, 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : password}})
+
+    }
+
+    join_chat(username,password,chat_id){
+      return axios.post('https://api.chatengine.io/chats/'+chat_id.toString()+'/people/',{'username': username}, {headers: {'User-Name' : username, 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : password}})
+
+    }
+    
 
 
 

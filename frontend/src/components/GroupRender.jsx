@@ -10,6 +10,8 @@ const GroupRender = (props) => {
   const { id, created_by, profile, title } = Data;
 
   const handleSubmit = (event) => {
+    props.apiservice.join_chat(props.username, props.password, props.id).then(() => {
+    });
     props.apiservice.joingroup(props.username, title )
     // Prevent page reload
     event.preventDefault();

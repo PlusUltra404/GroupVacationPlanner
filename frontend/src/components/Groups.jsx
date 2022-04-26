@@ -35,7 +35,7 @@ export const Groups = (props) => {
   const [profile, setProfile] = useState("");
   const navigate = useNavigate();
   const [bool, setbool] = useState(false);
-
+  const [id,setID] = useState(2);
   const [dummy, setDummy] = useState([]);
 
   /*  const dummy = [
@@ -68,7 +68,10 @@ export const Groups = (props) => {
 
   
   const handleSubmit = (event) => {
-    props.apiservice.creategroup(props.username, name, profile).then(() => {
+    props.apiservice.create_chat(props.username, name, props.password).then((result) => {
+      setID(result.data['id']);
+    });
+    props.apiservice.creategroup(props.username, name, profile,id).then(() => {
       navigate({
         pathname: "/home",
       });
@@ -135,7 +138,7 @@ export const Groups = (props) => {
           <div className="info-card">
             <div>
               {dummy.map((item) => (
-                <GroupRender Data={item} key={item.id} username={props.username} apiservice={props.apiservice}/>
+                <GroupRender Data={item} key={item.id} username={props.username} apiservice={props.apiservice} id={id}/>
               ))}
             </div>
           </div>
