@@ -251,7 +251,7 @@ def get_started():
 
     r = requests.post('https://api.chatengine.io/chats/',
             data=NewChat,
-            headers={'User-Name' : username, 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : Upassword, 'Private-Key' : '99ca68a1-4735-4bb7-8182-52eaa4b095e9'}
+            headers={{'User-Name' : username, 'Project-ID' : 'd84aadd4-ad67-4b0b-b507-415a6fb05ae2' , 'User-Secret' : Upassword} }
     )
     print(r.content)
     data = r.json()

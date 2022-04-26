@@ -27,27 +27,7 @@ function Profile(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    if (username === "") {
-      setusername(Username);
-    }
-    if (email === "") {
-      setemail(Email);
-    }
-    if (password === "") {
-      setpassword(Password);
-    } 
-    if (intro === "") {
-      setintro(Intro);
-    }
-    if (mobile === "") {
-      setmobile(Mobile);
-    }
-    if (firstname === "") {
-      setfirst(Firstname);
-    }
-    if (lastname === "") {
-      setlast(Lastname);
-    }
+    
     props.apiservice.update_user(username,
       email,
       password,
@@ -67,6 +47,16 @@ function Profile(props) {
       setMobile(result["data"][0]["mobile"]);
       setFirst(result["data"][0]["firstname"]);
       setLast(result["data"][0]["lastname"]);
+    
+      setusername(result["data"][0]["username"]);
+      setemail(result["data"][0]["email"]);
+      setpassword(result["data"][0]["password"]);
+      setintro(result["data"][0]["intro"]);
+      setmobile(result["data"][0]["mobile"]);
+      setfirst(result["data"][0]["firstname"]);
+      setlast(result["data"][0]["lastname"]);
+     
+
     });
   }, []);
 
