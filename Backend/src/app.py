@@ -164,8 +164,7 @@ def get_users():
 def update_user():
     json_data = request.json
     Username = request.json.get("username", None)
-    user_obj = sessiondb.query(User).filter_by(username = Username )\
-    .update({'username': json_data['username'],
+    user_obj = sessiondb.query(User).filter_by(username = Username ).update({'username': json_data['username'],
     'firstname': json_data['firstname'],
     'lastname': json_data['lastname'],
     'mobile': json_data['mobile'],
@@ -173,7 +172,7 @@ def update_user():
     'email': json_data['email'],
     'password': json_data['password']
     })
-
+    sessiondb.commit()
 
     sessiondb.close()
     return jsonify({'result': 'status'})
